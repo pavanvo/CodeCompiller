@@ -34,7 +34,7 @@ namespace ConsoleApp1 {
 
         private void init(string filename) {
             //fileText = File.ReadAllText(filename);
-            fileText = "for i:=1 to 10 do x:=x+1;";
+            fileText = "for i:=1 to 10 do x:=x+1; ";
         }
 
         private bool read() {
@@ -51,36 +51,38 @@ namespace ConsoleApp1 {
 
         private void addToken(Lexeme lexeme) {
             var last = lexemes.LastOrDefault();
-            if (last != null) {
-                if (last.Type == lexeme.Type) {
-                    last.Value = new StringBuilder(last.Value)
+            if (last != null && last.Type == lexeme.Type) {
+                last.Value = new StringBuilder(last.Value)
                         .Append(lexeme.Value).ToString();
-                }
+
             } else lexemes.Add(lexeme);
         }
 
         public List<Lexeme> Scan(string filename) {
             init(filename);
-
+            char c = new char();
             State state = State.Start;
+
+            void restart(bool hard = true) {
+                if(hard) c = getNext();
+                state = State.Start;
+            }
+            restart();
+
             while (read()) {
-
-                var c = getNext();
-
                 switch (state) {
                     case State.Start: 
                         {
                             // spaces
                             while ((c == ' ') || (c == '\t') || (c == '\n')) {
-                                c = getNext();
+                                restart();
                             }
                             // Identificators
                             if (((c >= 'A') && (c <= 'Z')) ||
                                 ((c >= 'a') && (c <= 'z')) || (c == '_')) {
                                 state = State.ID;
                             }// numbers
-                            else if (((c >= '0') && (c <= '9')) || (c == '.') ||
-                                         (c == '+') || (c == '-')) {
+                            else if ((c >= '0' && c <= '9') || c == '.') {
                                 state = State.Number;
                             } else if (c == ':') {
                                 state = State.Delimiter;
@@ -96,33 +98,38 @@ namespace ConsoleApp1 {
                                  (c <= 'z')) || ((c >= '0') && (c <= '9')) ||
                                  (c == '_')) {
                                 sb.Append(c);
-
+                                c = getNext();
                             }
 
-                            var token = new Lexeme();
-                            if (isKword(sb.ToString()))
-                                token.Type = LexemeType.Kword;
-                            else
-                                token.Type = LexemeType.ID;
+                            var value = sb.ToString();
+                            var token = new Lexeme {
+                                Value = value, 
+                                Type = isKword(value) ? LexemeType.Kword: LexemeType.ID 
+                            };
 
                             addToken(token);
-                            state = State.Start;
+                            restart(hard: false);
                             break;
                         }
-                    case State.Number:
-
-                        break;
+                    case State.Number: 
+                        {
+                            var token = new Lexeme(LexemeType.Number, c + "");
+                            addToken(token);
+                            restart();
+                            break;
+                        }
                     case State.Delimiter: 
                         {
-                            if ((c == '(') || (c == ')') || (c == ';')) {
+                            if (c == '(' || c == ')' || c == ';' || 
+                                c == ':' || c == '=' || c == '+' || c == '-') {
                                 var token = new Lexeme(LexemeType.Delimiter, c + "");
                                 addToken(token);
-                                state = State.Start;
+                                restart();
                                 //
-                            } else if ((c == '<') || (c == '>')/* || (c == '=')*/) {
+                            } else if (c == '<' || c == '>'/* || (c == '=')*/) {
                                 var token = new Lexeme(LexemeType.Operator, c + "");
                                 addToken(token);
-                                state = State.Start;
+                                restart();
                             } else {
                                 state = State.Error;
                             }// if((c == '(') || (c == ')') || (c == ';'))
@@ -130,6 +137,7 @@ namespace ConsoleApp1 {
                         }
                     case State.Error: {
                             Console.WriteLine($"Error: Index = {index}");
+                            restart();
                             break;
                         }
                 };
