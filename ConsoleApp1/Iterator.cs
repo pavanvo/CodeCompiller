@@ -10,6 +10,18 @@ namespace ConsoleApp1 {
 		private int To { get; set; }
 		private string Name { get; set; }
 
+
+		public Action Inner = () => { Console.WriteLine("Test inner"); };
+
+		public Action Next { get; set; } = () => { };
+
+		public void Start() {
+			Iterate();
+		}
+
+		public Action<int, string> Assign = (newValue, name) => { };
+
+
 		public static Lexeme[] Signature() {
 			return new Lexeme[] { 
 				new Lexeme(LexemeType.Kword, 5), //0
@@ -30,13 +42,8 @@ namespace ConsoleApp1 {
 			}
 		}
 
-		public List<Action> Actions { get; set; }
 
-		public void Start() {
-			Iterate();
-		}
 
-		public Action<int, string> Assign = (newValue, name) => { };
 
 		void Iterate() {
 			if (Current < To) {
@@ -48,11 +55,6 @@ namespace ConsoleApp1 {
 
 			Next();
 		}
-
-        public Action Inner = () => { Console.WriteLine("Test inner"); };
-
-		public Action Next = () => { };
-
 
 		bool readSignature(IEnumerable<Lexeme> test) {
 			var checks = new List<bool>();

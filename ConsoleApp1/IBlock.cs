@@ -6,6 +6,8 @@ using System.Threading.Tasks;
 
 namespace ConsoleApp1 {
     interface IBlock {
-        List<Action> Actions { get; set; }
+        void Start();
+
+        Action Next { get; set; }
     }
 }
