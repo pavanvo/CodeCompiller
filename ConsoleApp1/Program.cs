@@ -8,8 +8,9 @@ namespace ConsoleApp1 {
     class Program {
         static void Main(string[] args) {
             var scaner = new Scaner();
-            var test = scaner.Scan("");
-            foreach (var item in test) {
+            var result = scaner.Scan("");
+            foreach (var item in result.lexemes) {
+
                 Console.WriteLine($"{item.Value} {item.Type}");
             }
             

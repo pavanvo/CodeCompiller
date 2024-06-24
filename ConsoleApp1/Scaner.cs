@@ -22,19 +22,33 @@ namespace ConsoleApp1 {
         public string Value { get; set; }
     }
 
+    class Result {
+        public readonly string[] kwords = { "var", "int", "boolean", "begin", "end", "for", "to", "do" };
+
+        public readonly string[] delimiters = { ";", ",", ":", ":=", "+", "*", "/", "<", ">", "<=", ">=" };
+
+        public readonly List<int> litearals = new List<int>(); //for now -int only
+
+        public readonly List<string> IDs = new List<string>();
+
+        public readonly List<Lexeme> lexemes = new List<Lexeme>();
+
+        public bool isKword(string id) {
+            return kwords.Contains(id);
+        }
+
+        public bool isDelimiter(string delim) {
+            return delimiters.Contains(delim);
+        }
+
+        public void addToken(Lexeme lexeme) {
+            lexemes.Add(lexeme);
+        }
+    }
+
 
     class Scaner {
         private string fileText = string.Empty;
-
-        private readonly string[] kwords = { "var", "int", "boolean", "begin", "end", "for", "to", "do" };
-
-        private readonly string[] delimiters = { ";", ",", ":", ":=", "+", "*", "/", "<", ">", "<=", ">=" };
-
-        private readonly List<int> litearals = new List<int>(); //for now -int only
-
-        private readonly List<string> IDs = new List<string>();
-
-        private readonly List<Lexeme> lexemes = new List<Lexeme>();
 
         private int index { get; set; } = 0;
 
@@ -51,20 +65,9 @@ namespace ConsoleApp1 {
             return fileText[index++];
         }
 
-        private bool isKword(string id) {
-            return kwords.Contains(id);
-        }
+       
 
-        private void addToken(Lexeme lexeme) {
-            var last = lexemes.LastOrDefault();
-            if (last != null && last.Type == lexeme.Type) {
-                last.Value = new StringBuilder(last.Value)
-                        .Append(lexeme.Value).ToString();
-
-            } else lexemes.Add(lexeme);
-        }
-
-        public List<Lexeme> Scan(string filename) {
+        public Result Scan(string filename) {
             init(filename);
             char c = new char();
             State state = State.Start;
@@ -74,6 +77,8 @@ namespace ConsoleApp1 {
                 state = State.Start;
             }
             restart();
+
+            var result = new Result();
 
             while (read()) {
                 switch (state) {
@@ -111,32 +116,41 @@ namespace ConsoleApp1 {
                             var value = sb.ToString();
                             var token = new Lexeme {
                                 Value = value, 
-                                Type = isKword(value) ? LexemeType.Kword: LexemeType.ID 
+                                Type = result.isKword(value) ? LexemeType.Kword: LexemeType.ID 
                             };
 
-                            addToken(token);
+                            result.addToken(token);
                             restart(hard: false);
                             break;
                         }
                     case State.Number: 
                         {
-                            var token = new Lexeme(LexemeType.Number, c + "");
-                            addToken(token);
-                            restart();
+                            var sb = new StringBuilder();
+                            while ((c >= '0' && c <= '9') || c == '.') {
+                                sb.Append(c);
+                                c = getNext();
+                            }
+
+                            var value = sb.ToString();
+                            var token = new Lexeme(LexemeType.Number, value);
+                            result.addToken(token);
+                            restart(hard: false);
                             break;
                         }
                     case State.Delimiter: 
                         {
-                            if (c == '(' || c == ')' || c == ';' || 
+                            var sb = new StringBuilder();
+                            while (c == '(' || c == ')' || c == ';' || 
                                 c == ':' || c == '=' || c == '+' || c == '-') {
-                                var token = new Lexeme(LexemeType.Delimiter, c + "");
-                                addToken(token);
-                                restart();
-                                //
-                            } else if (c == '<' || c == '>'/* || (c == '=')*/) {
-                                var token = new Lexeme(LexemeType.Operator, c + "");
-                                addToken(token);
-                                restart();
+                                sb.Append(c);
+                                c = getNext();
+                            }
+
+                            var value = sb.ToString();
+                            if (result.isDelimiter(value)) {
+                                var token = new Lexeme(LexemeType.Delimiter, value);
+                                result.addToken(token);
+                                restart(hard: false);
                             } else {
                                 state = State.Error;
                             }
@@ -149,7 +163,7 @@ namespace ConsoleApp1 {
                         }
                 };
             }
-            return lexemes;
+            return result;
         }
     }
 }
