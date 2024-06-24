@@ -26,7 +26,13 @@ namespace ConsoleApp1 {
     class Scaner {
         private string fileText = string.Empty;
 
-        private readonly string[] kwords = { "for", "to", "do" };
+        private readonly string[] kwords = { "var", "int", "boolean", "begin", "end", "for", "to", "do" };
+
+        private readonly string[] delimiters = { ";", ",", ":", ":=", "+", "*", "/", "<", ">", "<=", ">=" };
+
+        private readonly List<int> litearals = new List<int>(); //for now -int only
+
+        private readonly List<string> IDs = new List<string>();
 
         private readonly List<Lexeme> lexemes = new List<Lexeme>();
 
@@ -74,12 +80,12 @@ namespace ConsoleApp1 {
                     case State.Start: 
                         {
                             // spaces
-                            while ((c == ' ') || (c == '\t') || (c == '\n')) {
+                            while (c == ' ' || c == '\t' || c == '\n') {
                                 restart();
                             }
                             // Identificators
-                            if (((c >= 'A') && (c <= 'Z')) ||
-                                ((c >= 'a') && (c <= 'z')) || (c == '_')) {
+                            if ((c >= 'A' && c <= 'Z') ||
+                                (c >= 'a' && c <= 'z') || c == '_') {
                                 state = State.ID;
                             }// numbers
                             else if ((c >= '0' && c <= '9') || c == '.') {
@@ -94,9 +100,10 @@ namespace ConsoleApp1 {
                     case State.ID: 
                         {
                             var sb = new StringBuilder();
-                            while (((c >= 'A') && (c <= 'Z')) || ((c >= 'a') &&
-                                 (c <= 'z')) || ((c >= '0') && (c <= '9')) ||
-                                 (c == '_')) {
+                            while ((c >= 'A' && c <= 'Z') || 
+                                   (c >= 'a' && c <= 'z') || 
+                                   (c >= '0' && c <= '9') || 
+                                   c == '_') {
                                 sb.Append(c);
                                 c = getNext();
                             }
@@ -132,7 +139,7 @@ namespace ConsoleApp1 {
                                 restart();
                             } else {
                                 state = State.Error;
-                            }// if((c == '(') || (c == ')') || (c == ';'))
+                            }
                             break;
                         }
                     case State.Error: {
