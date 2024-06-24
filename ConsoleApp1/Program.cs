@@ -15,6 +15,8 @@ namespace ConsoleApp1 {
             var IDs = result.GetIDs();
             var lexemes = result.GetLexemes();
 
+
+            // Приведём вывод к тому что в примере методички
             foreach (var item in lexemes) {
                 var lexeme = string.Empty;
                 switch (item.Type) {
@@ -31,7 +33,8 @@ namespace ConsoleApp1 {
                         lexeme = IDs[item.Index];
                         break;
                 }
-                Console.WriteLine("{0,7} |{1, 2}", lexeme, $"{((int)item.Type) + 1}, {item.Index + 1} ");
+                Console.WriteLine("{0,7} | {1, 2}", lexeme, $"{((int)item.Type) + 1}, {item.Index + 1} ");
+                Console.WriteLine("--------------");
             }
             
             Console.ReadKey();
