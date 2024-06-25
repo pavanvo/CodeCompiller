@@ -21,7 +21,8 @@ namespace ConsoleApp1 {
                 lastInnerBlock = block as IInnerBlock;
             }
 
-            if (inner) { lastInnerBlock.InnerBlock(block); } else if (lastBlock != null) { lastBlock.AddBlock(block); }
+            if (inner) lastInnerBlock.InnerBlock(block);
+            else if (lastBlock != null) lastBlock.AddBlock(block);
 
             // this is wrong; IT WORKS
             if (lastInnerBlock != null)
