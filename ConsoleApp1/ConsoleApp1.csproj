@@ -43,20 +43,25 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="IBlock.cs" />
-    <Compile Include="ICode.cs" />
-    <Compile Include="IInnerBlock.cs" />
-    <Compile Include="NetRunner.cs" />
-    <Compile Include="Lexeme.cs" />
-    <Compile Include="PlainBlock.cs" />
+    <Compile Include="Compiller\Code\BurnExpression.cs" />
+    <Compile Include="Compiller\Global.cs" />
+    <Compile Include="Compiller\Block\IBlock.cs" />
+    <Compile Include="Compiller\Code\ICode.cs" />
+    <Compile Include="Compiller\Block\IInnerBlock.cs" />
+    <Compile Include="Compiller\Code\Expression.cs" />
+    <Compile Include="Compiller\NetRunner.cs" />
+    <Compile Include="Lexer\Lexeme.cs" />
+    <Compile Include="Compiller\Block\PlainBlock.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Result.cs" />
-    <Compile Include="Scaner.cs" />
+    <Compile Include="Lexer\Result.cs" />
+    <Compile Include="Lexer\Scaner.cs" />
+    <Compile Include="Compiller\Code\Value.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
-    <Compile Include="Iterator.cs" />
+    <Compile Include="Compiller\Block\Iterator.cs" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

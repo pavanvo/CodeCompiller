@@ -13,9 +13,22 @@ namespace ConsoleApp1 {
 
         public PlainBlock(IEnumerable<Lexeme> lexemes) {
             Name = Global.ids[lexemes.ElementAt(0).Index];
-
             expr = lexemes.Skip(2).Take(lexemes.Count() - 3);
-           
+        }
+
+        void Build() {
+            Code.Clear();
+            for (int i = 0; i < expr.Count(); i++) {
+                var value = new Value(expr.ElementAt(i));
+                if (value.Check()) {
+                    Code.Add(value);
+                }
+
+                var expression = new Expression(expr.ElementAt(i));
+                if (expression.Check()) {
+                    Code.Add(expression);
+                }
+            }
         }
 
         void Assign(int value) {
@@ -48,23 +61,12 @@ namespace ConsoleApp1 {
         }
 
         public void Start() {
-            Code.Clear();
-            for (int i = 0; i < expr.Count(); i++) {
-                var value = new Value(expr.ElementAt(i));
-                if (value.Check()) {
-                    Code.Add(value);
-                }
-
-                var expression = new Expression(expr.ElementAt(i));
-                if (expression.Check()) {
-                    Code.Add(expression);
-                }
-            }
+            Build();
             var exec = Execute();
             Assign(exec.Get());
 
             Next?.Start();
-            Console.WriteLine(Global.variables["x"]);
+            Console.WriteLine($"PlainBlock, {Name}: {Global.variables[Name]}");
         }
 
         public static bool readSignature(IEnumerable<Lexeme> test) {

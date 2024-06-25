@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ConsoleApp1 {
     class Iterator : IInnerBlock {
@@ -42,14 +40,12 @@ namespace ConsoleApp1 {
             To = Global.literals[lexemes.ElementAt(5).Index];
         }
 
-
-
-
         void Iterate() {
             while (Current < To) {
                 Current++;
 
                 Assign(Current);
+                Console.WriteLine($"Iterator, {Name}: {Global.variables[Name]}");
                 Inner?.Start();
             }
 
