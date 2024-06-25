@@ -5,9 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1 {
-    interface IBlock {
-        void Start();
-
-        IBlock Next { get; set; }
+    interface IInnerBlock : IBlock{
+        IBlock Inner { get; set; }
     }
 }

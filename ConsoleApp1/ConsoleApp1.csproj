@@ -44,6 +44,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="IBlock.cs" />
+    <Compile Include="ICode.cs" />
+    <Compile Include="IInnerBlock.cs" />
     <Compile Include="NetRunner.cs" />
     <Compile Include="Lexeme.cs" />
     <Compile Include="PlainBlock.cs" />

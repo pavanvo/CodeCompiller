@@ -11,8 +11,8 @@ namespace ConsoleApp1 {
             //var IDs = result.GetIDs();
             //var lexemes = result.GetLexemes();
 
-            var netRunner = new NetRunner();
-            netRunner.Run(result);
+            var netRunner = new NetRunner(result);
+            netRunner.Run();
 
             // Приведём вывод к тому что в примере методички
             //foreach (var item in lexemes) {

@@ -5,9 +5,9 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace ConsoleApp1 {
-    interface IBlock {
-        void Start();
+    public interface ICode {
+        bool Check();
 
-        IBlock Next { get; set; }
+        int Get();
     }
 }

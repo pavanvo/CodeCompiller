@@ -1,5 +1,5 @@
 ﻿namespace ConsoleApp1 {
-    class Lexeme {
+    public class Lexeme {
         public Lexeme() {
 
         }

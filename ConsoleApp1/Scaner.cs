@@ -2,8 +2,8 @@
 using System.Text;
 
 namespace ConsoleApp1 {
-    enum State { Start, ID, Number, Delimiter, Error };
-    enum LexemeType { Kword, Delimiter, Number, ID, };
+    public enum State { Start, ID, Number, Delimiter, Error };
+    public enum LexemeType { Kword, Delimiter, Number, ID, };
 
     class Scaner {
 
@@ -23,8 +23,7 @@ namespace ConsoleApp1 {
         }
 
         private char getNext() {
-            if (CurrentIndex == fileText.Length - 1) 
-                { end = true; return new char(); }
+            if (CurrentIndex == fileText.Length - 1) { end = true; return new char(); }
             return fileText[++CurrentIndex];
         }
 

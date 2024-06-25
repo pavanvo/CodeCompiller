@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 
 namespace ConsoleApp1 {
-    class Result {
+    public class Result {
         private readonly string[] kwords = { "var", "int", "boolean", "begin", "end", "for", "to", "do" };
 
         private readonly string[] delimiters = { ";", ",", ":", ":=", "+", "*", "/", "<", ">", "<=", ">=" };
