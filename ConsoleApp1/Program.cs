@@ -7,7 +7,8 @@ namespace ConsoleApp1 {
             var result = scaner.Scan("program.txt");
 
             var netRunner = new NetRunner(result);
-            netRunner.Run();
+            if(!netRunner.Run())
+                Console.WriteLine("Compilation failed");
 
             Console.ReadKey();
         }
