@@ -91,5 +91,18 @@ namespace ConsoleApp1 {
 
             return checks.TrueForAll((x) => x);
         }
+
+        public void AddBlock(IBlock block) {
+            if (Next != null)
+                Next.AddBlock(block);
+            else Next = block;
+        }
+
+        public void InnerBlock(IBlock block) {
+            if (Inner != null) {
+                if (Inner is IInnerBlock) { (Inner as IInnerBlock).InnerBlock(block); } 
+                else Inner.AddBlock(block);
+            } else Inner = block;
+        }
     }
 }

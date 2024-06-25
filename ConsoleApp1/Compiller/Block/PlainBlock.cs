@@ -69,6 +69,12 @@ namespace ConsoleApp1 {
             Console.WriteLine($"PlainBlock, {Name}: {Global.variables[Name]}");
         }
 
+        public void AddBlock(IBlock block) {
+            if (Next != null)
+                Next.AddBlock(block);
+            else Next = block;
+        }
+
         public static bool readSignature(IEnumerable<Lexeme> test) {
             if (test.ElementAt(0).Type != LexemeType.ID) return false; //variable
             if (test.ElementAt(1).Type != LexemeType.Delimiter || test.ElementAt(1).Index != 3) return false; //Assign

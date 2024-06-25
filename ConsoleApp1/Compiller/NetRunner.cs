@@ -21,11 +21,12 @@ namespace ConsoleApp1 {
                 lastInnerBlock = block as IInnerBlock;
             }
 
-            if (inner) { lastInnerBlock.Inner = block; }
-            else if(lastBlock  != null) { lastBlock.Next = block; }
+            if (inner) { lastInnerBlock.InnerBlock(block); } else if (lastBlock != null) { lastBlock.AddBlock(block); }
 
-
-            lastBlock = block;
+            // this is wrong; IT WORKS
+            if (lastInnerBlock != null)
+                lastBlock = lastInnerBlock;
+            else lastBlock = block;
         }
 
         public bool Run() {
@@ -45,7 +46,8 @@ namespace ConsoleApp1 {
                                 AppendBlock(iterator); inner = true;
                                 index += signature.Length - 1;
                             }
-                            if (Global.kwords[lexeme.Index] == "end") inner = false;
+                            if (Global.kwords[lexeme.Index] == "end")
+                                inner = false;
                             break;
                         }
                     case LexemeType.Delimiter:
@@ -60,7 +62,7 @@ namespace ConsoleApp1 {
                             if (!PlainBlock.readSignature(part)) return false;
                             var plainBlock = new PlainBlock(part);
                             AppendBlock(plainBlock);
-                            index += endOfBlock;
+                            index = endOfBlock;
                             break;
                         }
                 }
