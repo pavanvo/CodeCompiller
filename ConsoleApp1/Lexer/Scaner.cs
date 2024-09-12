@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Text;
 
 namespace ConsoleApp1 {
@@ -14,8 +15,7 @@ namespace ConsoleApp1 {
         private int CurrentIndex { get; set; } = -1;
 
         private void init(string filename) {
-            //fileText = File.ReadAllText(filename);
-            fileText = "for i:=1 to 10 do x:=x+1*10; end x:=x+1; x:=x+1;";
+            fileText = File.ReadAllText(filename);
         }
 
         private bool read() {
@@ -45,7 +45,7 @@ namespace ConsoleApp1 {
                     case State.Start: {
                             c = getNext();
                             // spaces
-                            while (c == ' ' || c == '\t' || c == '\n') {
+                            while (c == ' ' || c == '\t' || c == '\r' || c == '\n') {
                                 c = getNext();
                             }
                             // Identificators
