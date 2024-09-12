@@ -65,8 +65,8 @@ namespace ConsoleApp1 {
             var exec = Execute();
             Assign(exec.Get());
 
-            Next?.Start();
             Console.WriteLine($"PlainBlock, {Name}: {Global.variables[Name]}");
+            Next?.Start();
         }
 
         public void AddBlock(IBlock block) {

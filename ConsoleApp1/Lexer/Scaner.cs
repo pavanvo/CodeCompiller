@@ -15,7 +15,7 @@ namespace ConsoleApp1 {
 
         private void init(string filename) {
             //fileText = File.ReadAllText(filename);
-            fileText = "for i:=1 to 10 do x:=x+1*10; end x:=x+1;";
+            fileText = "for i:=1 to 10 do x:=x+1*10; end x:=x+1; x:=x+1;";
         }
 
         private bool read() {
