@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1 {
+﻿namespace CodeCompiller {
     public class BurnExpression : ICode {
         public BurnExpression(int value) {
             this.value = value;

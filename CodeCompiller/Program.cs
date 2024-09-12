@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ConsoleApp1 {
+namespace CodeCompiller {
     class Program {
         static void Main(string[] args) {
             var scaner = new Scaner();

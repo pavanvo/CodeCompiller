@@ -2,7 +2,7 @@
 using System.IO;
 using System.Text;
 
-namespace ConsoleApp1 {
+namespace CodeCompiller {
     public enum State { Start, ID, Number, Delimiter, Error };
     public enum LexemeType { Kword, Delimiter, Number, ID, };
 

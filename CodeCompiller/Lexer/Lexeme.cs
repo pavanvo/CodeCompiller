@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1 {
+﻿namespace CodeCompiller {
     public class Lexeme {
         public Lexeme() {
 

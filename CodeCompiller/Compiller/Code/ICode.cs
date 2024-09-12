@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1 {
+﻿namespace CodeCompiller {
     public interface ICode {
         bool Check();
 

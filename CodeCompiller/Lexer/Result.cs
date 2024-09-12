@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConsoleApp1 {
+namespace CodeCompiller {
     public class Result {
         private readonly string[] kwords = { "var", "int", "boolean", "begin", "end", "for", "to", "do" };
 

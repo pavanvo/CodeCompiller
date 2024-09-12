@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1 {
+﻿namespace CodeCompiller {
     interface IBlock {
         void Start();
 

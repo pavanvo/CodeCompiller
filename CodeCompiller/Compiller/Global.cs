@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 
-namespace ConsoleApp1 {
+namespace CodeCompiller {
     public static class Global {
 
         public static string[] kwords { get; private set; } = { "var", "int", "boolean", "begin", "end", "for", "to", "do" };

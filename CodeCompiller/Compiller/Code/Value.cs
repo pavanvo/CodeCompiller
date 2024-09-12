@@ -1,4 +1,4 @@
-﻿namespace ConsoleApp1 {
+﻿namespace CodeCompiller {
     public class Value : ICode {
         public Value(Lexeme lexeme) {
             this.lexeme = lexeme;

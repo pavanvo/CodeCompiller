@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConsoleApp1 {
+namespace CodeCompiller {
     class Iterator : IInnerBlock {
         private int Current { get; set; }
         private int To { get; set; }

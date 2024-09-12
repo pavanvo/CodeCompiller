@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace ConsoleApp1 {
+namespace CodeCompiller {
     class PlainBlock : IBlock {
         public IBlock Next { get; set; }
 
